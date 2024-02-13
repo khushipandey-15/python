@@ -195,6 +195,45 @@
 # print(tup.count(3))
 
 
+# DAY 25(TUPLE methods)
+countries=("india","austrlia","finland","russia")
+temp=list(countries)
+temp.append("usa")
+temp.pop(3)
+
+temp.insert(2,"america")
+countries=tuple(temp)
+print(countries)
+countries_2=("pakistan","bangladesh","china")
+world=countries+countries_2
+print(world)
+tup1=(10,2,3,4,3,2,1,1,3,4,3,3)
+res=tup1.count(3)
+print(res)
+res=tup1.index(3,4,8)
+put=len(tup1)
+print("3 comes in first index between 4 to 8 index :",res)
+print(put)
+
+
+# DAY 26
+import time
+
+t=time.strftime("%H:%M:%S")
+print(t)
+hour=time.strftime('%H')
+print(hour)
+
+if(hour>0 and hour<12):
+    print("Good Morning")
+
+elif(hour>=12 and hour<18):
+    print("Good  Afternoon")
+
+elif(hour>=18 and hour<=24):
+    print("Good night")
+
+
 
 
 
