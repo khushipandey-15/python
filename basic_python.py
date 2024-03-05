@@ -234,6 +234,99 @@ elif(hour>=18 and hour<=24):
     print("Good night")
 
 
+#COLLAGE CODE
+
+from flask import Flask,render template
+from flask_sqlalchemy import SQLAlchemy
+
+app=Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"]='sqlite:///user.sqlite3'
+app.config["SQLALCHEMY_TRACK_MODIFICATION"]=False
+
+db=SQLAlchemy(app)
+
+class student(db.model):
+    id=db.Column(db.Integer,primary_key=True)
+    name=db.Column(db.String(50))
+    subject=db.Column(db.String(50))
+    roll=db.Column(db.String(50))
+    contact=db.Column(db.String(50))
+
+    def __init__(self,name,subject,roll,contact):
+        self.name=name
+        self.subject=subject
+        self.roll=roll
+        self.contact=contact
+
+with app.app_context():
+    db.create_all()
+
+@app.route("/upload")
+def dataLoad():
+
+    data=[
+        {
+            'name':"goku",
+            'subject':"martialart",
+            'roll':'1',
+            'contact':'48421834'
+        },
+        {
+            'name':"gohan",
+            'subject':"physics",
+            'roll':'2',
+            'contact':'48432834'
+        },
+        {
+            'name':"vikratn",
+            'subject':"math",
+            'roll':'3',
+            'contact':'23484234'
+        }
+    ] 
+    for i in data:
+        stud=student(i['name'],i['subject'],i['roll'],i['contact'])
+        db.session.add(stud)
+    db.session.commit()
+
+    return "success"
+@app.route('/')
+def home():
+    data=student.query.all
+    print(data)
+
+    return render_template('home.html',data=data)
+#html
+<html>
+    <head>
+        <title>home page</title>
+    </head>
+    <body>
+        <style>
+            table,th,td{
+                border:1px solid black;
+            }
+        </style>
+        <h1>Student table</h1>
+        <table style="width:100%"
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>subject</th>
+            <th>contact</th>
+        </tr>
+
+        {%for i in data%}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.subject}}</td>
+            <td>{{i.contact}}</td>
+        </tr>
+        {% endfor %}
+    </body>
+</html>
+
 
 
 
